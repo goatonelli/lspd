@@ -140,12 +140,13 @@ cursor: move; flex-shrink: 0; border-radius: 4px 4px 0 0;
 position: relative; z-index: 200; height: 50px;
 background: #070f1e; border-top: 1px solid #1e3a7a;
 display: flex; align-items: center; padding: 0 12px; gap: 6px; flex-shrink: 0;
+overflow: hidden; /* prevent any scrollbar from appearing */
 }
 .tb-btn {
-height: 36px; padding: 0 16px; background: #111e33; border: 1px solid #1e3a7a;
-color: #6688bb; font-family: ‘Share Tech Mono’, monospace; font-size: 10px;
-letter-spacing: 2px; cursor: pointer; display: flex; align-items: center; gap: 8px;
-white-space: nowrap; border-radius: 3px; transition: all .2s;
+height: 36px; padding: 0 12px; background: #111e33; border: 1px solid #1e3a7a;
+color: #6688bb; font-family: ‘Share Tech Mono’, monospace; font-size: 9px;
+letter-spacing: 1px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+white-space: nowrap; border-radius: 3px; transition: all .2s; flex-shrink: 0;
 }
 .tb-btn:hover { background: #162840; color: #aaccff; border-color: #2255cc; }
 .tb-btn.active { background: #1a3050; border-color: #3366dd; color: #ffffff; }
@@ -733,112 +734,133 @@ white-space: nowrap; border-radius: 3px; transition: all .2s;
 </div>
 
 <!-- WIN: ORGANIGRAMM -->
-<div class="win" id="win-organigramm" style="width:740px;height:560px;top:55px;left:170px;">
+<div class="win" id="win-organigramm" style="width:820px;height:620px;top:55px;left:130px;">
   <div class="win-titlebar" onmousedown="startDrag(event,'win-organigramm')">
     <div class="win-dots"><div class="win-dot close" onclick="closeWin('organigramm')"></div><div class="win-dot min" onclick="minWin('organigramm')"></div><div class="win-dot max" onclick="maxWin('organigramm')"></div></div>
     <div class="win-title">ORGANIGRAMM — LSPD</div><div style="width:46px;"></div>
   </div>
-  <div class="win-body"><div class="win-pad">
+  <div class="win-body"><div class="win-pad" style="padding:20px 24px;">
     <div class="sec-head"><span class="sec-num">// ORG</span><h3>Organi<span>gramm</span></h3><div class="sec-divider"></div></div>
-    <p style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#4466aa;letter-spacing:2px;margin-bottom:20px;">FÜHRUNGSPOSITIONEN WERDEN NACH BESETZUNG EINGETRAGEN</p>
+    <p style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#334466;letter-spacing:2px;margin-bottom:16px;">NAMES WERDEN NACH BESETZUNG EINGETRAGEN — STAND: 19.04.2026</p>
 
-    <!-- LEITUNGSEBENE -->
-    <div class="org-level">
-      <div class="org-level-label leit">LEITUNGSEBENE</div>
-      <!-- Chief -->
-      <div class="org-row" style="justify-content:center;">
-        <div class="org-node chief">
-          <div class="org-rank">Chief of Police</div>
-          <div class="org-tag">LEADER</div>
-          <div class="org-name">Enzo LaBalotelli</div>
-        </div>
-      </div>
-      <div class="org-connector-down"></div>
-      <!-- 3 Assistant Chiefs -->
-      <div style="display:flex;justify-content:center;gap:12px;">
-        <div class="org-node co"><div class="org-rank">Assistant Chief of Police</div><div class="org-tag">CO-LEADER</div><div class="org-name">— vakant —</div></div>
-        <div class="org-node co"><div class="org-rank">Assistant Chief of Police</div><div class="org-tag">CO-LEADER</div><div class="org-name">— vakant —</div></div>
-        <div class="org-node co"><div class="org-rank">Assistant Chief of Police</div><div class="org-tag">CO-LEADER</div><div class="org-name">— vakant —</div></div>
-      </div>
-      <div class="org-connector-down"></div>
-      <!-- Division Commanders per Unit -->
-      <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
-        <div class="org-node curator" style="min-width:130px;">
-          <div class="org-rank" style="font-size:11px;">Div. Commander</div>
-          <div class="org-tag" style="font-size:8px;color:#ff7777;border-color:#882222;">IA</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-        <div class="org-node curator" style="min-width:130px;">
-          <div class="org-rank" style="font-size:11px;">Div. Commander</div>
-          <div class="org-tag" style="font-size:8px;color:#6699ff;border-color:#2244aa;">PD</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-        <div class="org-node curator" style="min-width:130px;">
-          <div class="org-rank" style="font-size:11px;">Div. Commander</div>
-          <div class="org-tag" style="font-size:8px;color:#cc77ff;border-color:#663388;">SOCOM</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-        <div class="org-node curator" style="min-width:130px;">
-          <div class="org-rank" style="font-size:11px;">Div. Commander</div>
-          <div class="org-tag" style="font-size:8px;color:#44ddaa;border-color:#226644;">DB</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-      </div>
+    <!-- TREE SVG -->
+    <div style="overflow-x:auto;">
+    <svg viewBox="0 0 760 520" width="100%" style="min-width:600px;font-family:'Share Tech Mono',monospace;">
+
+      <!-- ============ CONNECTOR LINES ============ -->
+      <!-- Chief → 3 Asst Chiefs (horizontal bar at y=95) -->
+      <line x1="380" y1="72" x2="380" y2="95" stroke="#c9a84c" stroke-width="1.5"/>
+      <line x1="130" y1="95" x2="630" y2="95" stroke="#2244aa" stroke-width="1.2"/>
+      <line x1="130" y1="95" x2="130" y2="115" stroke="#886622" stroke-width="1.2"/>
+      <line x1="380" y1="95" x2="380" y2="115" stroke="#886622" stroke-width="1.2"/>
+      <line x1="630" y1="95" x2="630" y2="115" stroke="#886622" stroke-width="1.2"/>
+
+      <!-- 3 Asst Chiefs → Division Commanders (bar at y=175) -->
+      <!-- Left AC → IA+PD -->
+      <line x1="130" y1="153" x2="130" y2="175" stroke="#2244aa" stroke-width="1"/>
+      <line x1="80" y1="175" x2="180" y2="175" stroke="#2244aa" stroke-width="1"/>
+      <line x1="80" y1="175" x2="80" y2="195" stroke="#2244aa" stroke-width="1"/>
+      <line x1="180" y1="175" x2="180" y2="195" stroke="#2244aa" stroke-width="1"/>
+      <!-- Middle AC → SOCOM -->
+      <line x1="380" y1="153" x2="380" y2="195" stroke="#2244aa" stroke-width="1"/>
+      <!-- Right AC → DB -->
+      <line x1="630" y1="153" x2="630" y2="195" stroke="#2244aa" stroke-width="1"/>
+
+      <!-- Div Commanders → Supervisor (stacked, bar at y=275) -->
+      <line x1="80" y1="233" x2="80" y2="275" stroke="#2244aa" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="180" y1="233" x2="180" y2="275" stroke="#2244aa" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="380" y1="233" x2="380" y2="275" stroke="#2244aa" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="630" y1="233" x2="630" y2="275" stroke="#2244aa" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- Supervisor → Deputy → Admin Off (vertical chain, center) -->
+      <line x1="380" y1="313" x2="380" y2="333" stroke="#4466aa" stroke-width="1"/>
+      <line x1="380" y1="371" x2="380" y2="391" stroke="#4466aa" stroke-width="1"/>
+
+      <!-- ============ NODES ============ -->
+
+      <!-- CHIEF OF POLICE -->
+      <rect x="270" y="12" width="220" height="60" rx="3" fill="#1a1800" stroke="#c9a84c" stroke-width="2"/>
+      <text x="380" y="32" text-anchor="middle" font-size="13" fill="#f0c060" font-family="Bebas Neue,sans-serif" letter-spacing="2">Chief of Police</text>
+      <text x="380" y="46" text-anchor="middle" font-size="8" fill="#886622" letter-spacing="2">LEADER</text>
+      <text x="380" y="62" text-anchor="middle" font-size="10" fill="#ddeeff" font-family="Rajdhani,sans-serif" font-weight="700">Enzo LaBalotelli</text>
+
+      <!-- ASSISTANT CHIEF × 3 -->
+      <rect x="50" y="115" width="160" height="38" rx="2" fill="#12180a" stroke="#886622" stroke-width="1.5"/>
+      <text x="130" y="129" text-anchor="middle" font-size="10" fill="#cc9933" font-family="Bebas Neue,sans-serif" letter-spacing="1">Asst. Chief of Police</text>
+      <text x="130" y="141" text-anchor="middle" font-size="8" fill="#664400" letter-spacing="2">CO-LEADER</text>
+      <text x="130" y="151" text-anchor="middle" font-size="9" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <rect x="300" y="115" width="160" height="38" rx="2" fill="#12180a" stroke="#886622" stroke-width="1.5"/>
+      <text x="380" y="129" text-anchor="middle" font-size="10" fill="#cc9933" font-family="Bebas Neue,sans-serif" letter-spacing="1">Asst. Chief of Police</text>
+      <text x="380" y="141" text-anchor="middle" font-size="8" fill="#664400" letter-spacing="2">CO-LEADER</text>
+      <text x="380" y="151" text-anchor="middle" font-size="9" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <rect x="550" y="115" width="160" height="38" rx="2" fill="#12180a" stroke="#886622" stroke-width="1.5"/>
+      <text x="630" y="129" text-anchor="middle" font-size="10" fill="#cc9933" font-family="Bebas Neue,sans-serif" letter-spacing="1">Asst. Chief of Police</text>
+      <text x="630" y="141" text-anchor="middle" font-size="8" fill="#664400" letter-spacing="2">CO-LEADER</text>
+      <text x="630" y="151" text-anchor="middle" font-size="9" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- DIV COMMANDERS (one per unit) -->
+      <!-- IA -->
+      <rect x="30" y="195" width="100" height="38" rx="2" fill="#0d1a2e" stroke="#ff5555" stroke-width="1.2"/>
+      <text x="80" y="209" text-anchor="middle" font-size="9" fill="#ff7777" font-family="Bebas Neue,sans-serif" letter-spacing="1">Div. Commander</text>
+      <text x="80" y="221" text-anchor="middle" font-size="8" fill="#882222" letter-spacing="2">IA</text>
+      <text x="80" y="230" text-anchor="middle" font-size="8" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- PD -->
+      <rect x="130" y="195" width="100" height="38" rx="2" fill="#0d1a2e" stroke="#2255ee" stroke-width="1.2"/>
+      <text x="180" y="209" text-anchor="middle" font-size="9" fill="#6699ff" font-family="Bebas Neue,sans-serif" letter-spacing="1">Div. Commander</text>
+      <text x="180" y="221" text-anchor="middle" font-size="8" fill="#2244aa" letter-spacing="2">PD</text>
+      <text x="180" y="230" text-anchor="middle" font-size="8" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- SOCOM -->
+      <rect x="330" y="195" width="100" height="38" rx="2" fill="#0d1a2e" stroke="#8822ee" stroke-width="1.2"/>
+      <text x="380" y="209" text-anchor="middle" font-size="9" fill="#cc77ff" font-family="Bebas Neue,sans-serif" letter-spacing="1">Div. Commander</text>
+      <text x="380" y="221" text-anchor="middle" font-size="8" fill="#663388" letter-spacing="2">SOCOM</text>
+      <text x="380" y="230" text-anchor="middle" font-size="8" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- DB -->
+      <rect x="580" y="195" width="100" height="38" rx="2" fill="#0d1a2e" stroke="#11aa66" stroke-width="1.2"/>
+      <text x="630" y="209" text-anchor="middle" font-size="9" fill="#44ddaa" font-family="Bebas Neue,sans-serif" letter-spacing="1">Div. Commander</text>
+      <text x="630" y="221" text-anchor="middle" font-size="8" fill="#226644" letter-spacing="2">DB</text>
+      <text x="630" y="230" text-anchor="middle" font-size="8" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- MANAGEMENT CHAIN (stacked vertically, center) -->
+      <!-- Supervisor -->
+      <rect x="290" y="275" width="180" height="38" rx="2" fill="#0c1828" stroke="#4488ff" stroke-width="1.2"/>
+      <text x="380" y="289" text-anchor="middle" font-size="11" fill="#88aaff" font-family="Bebas Neue,sans-serif" letter-spacing="2">Supervisor</text>
+      <text x="380" y="301" text-anchor="middle" font-size="8" fill="#2244aa" letter-spacing="2">UNIT LEADER</text>
+      <text x="380" y="311" text-anchor="middle" font-size="8" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- Deputy Supervisor -->
+      <rect x="290" y="333" width="180" height="38" rx="2" fill="#0c1828" stroke="#3366cc" stroke-width="1.2"/>
+      <text x="380" y="347" text-anchor="middle" font-size="11" fill="#6699ee" font-family="Bebas Neue,sans-serif" letter-spacing="2">Deputy Supervisor</text>
+      <text x="380" y="359" text-anchor="middle" font-size="8" fill="#1a3377" letter-spacing="2">UNIT CO-LEADER</text>
+      <text x="380" y="369" text-anchor="middle" font-size="8" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- Administrative Officer (Middle Bracket - moved here) -->
+      <rect x="290" y="391" width="180" height="38" rx="2" fill="#0c1828" stroke="#ff5555" stroke-width="1.2"/>
+      <text x="380" y="405" text-anchor="middle" font-size="10" fill="#ff7777" font-family="Bebas Neue,sans-serif" letter-spacing="1">Administrative Officer</text>
+      <text x="380" y="417" text-anchor="middle" font-size="8" fill="#882222" letter-spacing="2">IA MITGLIED</text>
+      <text x="380" y="427" text-anchor="middle" font-size="8" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- Superintendent -->
+      <line x1="380" y1="429" x2="380" y2="449" stroke="#4466aa" stroke-width="1"/>
+      <rect x="290" y="449" width="180" height="38" rx="2" fill="#0c1828" stroke="#2255aa" stroke-width="1.2"/>
+      <text x="380" y="463" text-anchor="middle" font-size="11" fill="#7799cc" font-family="Bebas Neue,sans-serif" letter-spacing="2">Superintendent</text>
+      <text x="380" y="475" text-anchor="middle" font-size="8" fill="#1a2a55" letter-spacing="2">MANAGEMENT</text>
+      <text x="380" y="485" text-anchor="middle" font-size="8" fill="#8899aa" font-family="Rajdhani,sans-serif">— vakant —</text>
+
+      <!-- LEGEND -->
+      <line x1="20" y1="510" x2="40" y2="510" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="45" y="514" font-size="8" fill="#664400" letter-spacing="1">Leitungslinie</text>
+      <line x1="120" y1="510" x2="140" y2="510" stroke="#2244aa" stroke-width="1"/>
+      <text x="145" y="514" font-size="8" fill="#334466" letter-spacing="1">Befehlslinie</text>
+      <line x1="220" y1="510" x2="240" y2="510" stroke="#2244aa" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="245" y="514" font-size="8" fill="#334466" letter-spacing="1">Weisungslinie</text>
+    </svg>
     </div>
 
-    <!-- MANAGEMENT -->
-    <div class="org-level" style="margin-top:24px;">
-      <div class="org-level-label mgmt">MANAGEMENT</div>
-      <div class="org-connector-h3"></div>
-      <div class="org-row">
-        <div class="org-node mgmt-node">
-          <div class="org-rank">Supervisor</div>
-          <div class="org-tag" style="color:#6699ee;border-color:#2244aa;">UNIT LEADER</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-        <div class="org-node mgmt-node">
-          <div class="org-rank">Deputy Supervisor</div>
-          <div class="org-tag" style="color:#6699ee;border-color:#2244aa;">UNIT CO-LEADER</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-        <div class="org-node mgmt-node">
-          <div class="org-rank">Administrative Officer</div>
-          <div class="org-tag" style="color:#ff7777;border-color:#882222;">IA MITGLIED</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABTEILUNGEN -->
-    <div class="org-level" style="margin-top:24px;">
-      <div class="org-level-label mid">ABTEILUNGSLEITER</div>
-      <div class="org-row">
-        <div class="org-node dept-node" style="border-color:#ff5555;">
-          <div class="org-rank" style="color:#ff7777;">IA</div>
-          <div class="org-tag" style="color:#ff7777;border-color:#882222;">INTERNAL ADMIN</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-        <div class="org-node dept-node" style="border-color:#2255ee;">
-          <div class="org-rank" style="color:#6699ff;">PD</div>
-          <div class="org-tag" style="color:#6699ff;border-color:#2244aa;">PATROL DIVISION</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-        <div class="org-node dept-node" style="border-color:#8822ee;">
-          <div class="org-rank" style="color:#cc77ff;">SOCOM</div>
-          <div class="org-tag" style="color:#cc77ff;border-color:#663388;">SPEC. OPS</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-        <div class="org-node dept-node" style="border-color:#11aa66;">
-          <div class="org-rank" style="color:#44ddaa;">DB</div>
-          <div class="org-tag" style="color:#44ddaa;border-color:#226644;">DETECTIVE BUREAU</div>
-          <div class="org-name">— vakant —</div>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:20px;padding:12px 16px;background:#091420;border:1px solid #1a3366;font-family:'Share Tech Mono',monospace;font-size:10px;color:#334466;letter-spacing:2px;line-height:1.8;">
-      ℹ️ NAMES WERDEN NACH BESETZUNG DER POSITIONEN EINGETRAGEN — STAND: 19.04.2026
-    </div>
   </div></div>
   <div class="win-resize" onmousedown="startResize(event,'win-organigramm')"></div>
 </div>
@@ -1073,36 +1095,49 @@ function loadFoto(e){
   reader.readAsDataURL(file);
 }
 
-// SOUND — Polizei Funk Rauschen
+// SOUND — Polizei Funk Atmosphäre
 let _ac=null,_gain=null,_src=null,_on=false;
 function toggleSound(){
   const btn=document.getElementById('sound-btn');
   if(_on){
-    _gain.gain.linearRampToValueAtTime(0,_ac.currentTime+0.4);
-    setTimeout(()=>{try{_src.stop();}catch(e){}; _on=false;btn.classList.remove('sound-on');},450);
+    _gain.gain.linearRampToValueAtTime(0,_ac.currentTime+0.5);
+    setTimeout(()=>{try{_src.stop();}catch(e){} _on=false;btn.classList.remove('sound-on');},600);
     return;
   }
   try{
     _ac=new(window.AudioContext||window.webkitAudioContext)();
-    if(_ac.state==='suspended'){_ac.resume();}
-    // Create stereo noise buffer
-    const dur=4, sr=_ac.sampleRate;
+    if(_ac.state==='suspended') _ac.resume();
+    const sr=_ac.sampleRate, dur=8;
+    // Create colored noise that sounds like radio static
     const buf=_ac.createBuffer(1,sr*dur,sr);
     const ch=buf.getChannelData(0);
-    for(let i=0;i<ch.length;i++) ch[i]=(Math.random()*2-1);
-    // Chain: noise → highpass → bandpass → gain → out
+    // Pink noise algorithm (sounds warmer than white)
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+    for(let i=0;i<ch.length;i++){
+      const wn=Math.random()*2-1;
+      b0=0.99886*b0+wn*0.0555179; b1=0.99332*b1+wn*0.0750759;
+      b2=0.96900*b2+wn*0.1538520; b3=0.86650*b3+wn*0.3104856;
+      b4=0.55000*b4+wn*0.5329522; b5=-0.7616*b5-wn*0.0168980;
+      ch[i]=(b0+b1+b2+b3+b4+b5+b6+wn*0.5362)*0.11;
+      b6=wn*0.115926;
+    }
     _src=_ac.createBufferSource();
     _src.buffer=buf; _src.loop=true;
-    const hp=_ac.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=300;
-    const bp=_ac.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1000; bp.Q.value=2;
+    // Radio band-pass filter (500-3000 Hz like a radio speaker)
+    const bp=_ac.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1500; bp.Q.value=0.6;
+    // Slight distortion for radio crunch
+    const wave=_ac.createWaveShaper();
+    const curve=new Float32Array(256);
+    for(let i=0;i<256;i++){const x=i*2/256-1; curve[i]=x*(1.5+0.5*Math.abs(x))/(1+0.5*Math.abs(x));}
+    wave.curve=curve;
     _gain=_ac.createGain(); _gain.gain.value=0;
-    _src.connect(hp); hp.connect(bp); bp.connect(_gain); _gain.connect(_ac.destination);
+    _src.connect(bp); bp.connect(wave); wave.connect(_gain); _gain.connect(_ac.destination);
     _src.start(0);
-    _gain.gain.linearRampToValueAtTime(0.4,_ac.currentTime+0.6);
+    _gain.gain.linearRampToValueAtTime(0.5,_ac.currentTime+0.8);
     _on=true; btn.classList.add('sound-on');
   } catch(err){
     const t=document.getElementById('toast');
-    t.textContent='⚠ Sound: Klick zuerst irgendwo auf die Seite';
+    t.textContent='⚠ Bitte zuerst irgendwo auf die Seite klicken';
     t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);
   }
 }
